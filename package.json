@@ -1,0 +1,35 @@
+{
+  "name": "bill-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guilhermehrq/bill-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guilhermehrq/bill-api/issues"
+  },
+  "homepage": "https://github.com/guilhermehrq/bill-api#readme",
+  "dependencies": {
+    "consign": "^0.1.6",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "moment": "^2.25.3",
+    "morgan": "^1.10.0",
+    "pg": "^8.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "nodemon": "^2.0.4",
+    "prettier": "2.0.5"
+  }
+}
