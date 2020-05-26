@@ -23,6 +23,10 @@ function doValidate(params, validation) {
             if (suitcase === null) return errorList.push(`"${paramName}" não pode ser nulo`);
         }
 
+        if (metalDetector.notEmpty) {
+            if (!suitcase.length) return errorList.push(`"${paramName}" não pode ser vazio`);
+        }
+
         if (suitcase && metalDetector.number) {
             if (isNaN(suitcase)) return errorList.push(`"${paramName}" deve ser um número`);
 
@@ -67,6 +71,16 @@ function doValidate(params, validation) {
                     `"${paramName}" deve ser conter menos que ${
                         metalDetector.maxLength
                     } caracteres`,
+                );
+            }
+        }
+
+        if (suitcase && metalDetector.minLength) {
+            if (suitcase.length >= metalDetector.minLength) {
+                return errorList.push(
+                    `"${paramName}" deve ser conter ao menos ${
+                        metalDetector.minLength
+                    } caractere(s)`,
                 );
             }
         }

@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const { Pool } = require("pg");
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -11,5 +9,10 @@ const pool = new Pool({
         : connectionString,
     ssl: isProduction,
 });
+
+pool.on('error', (err, client) => {
+    console.error('Unexpected error on idle connection', err);
+    process.exit(-1);
+})
 
 module.exports = { pool };

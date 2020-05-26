@@ -4,6 +4,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const express = require('express');
 
+require("dotenv").config();
+
 // Configurando timezone padrão
 const moment = require('moment');
 require('moment-timezone');
@@ -18,7 +20,7 @@ app.use(cors());
 app.use(morgan(':method | :url | :status | :response-time ms | :date[clf]'));
 
 consign()
-    .include('./config/routes.js')
+    .include('./src/config/routes.js')
     .into(app);
 
 module.exports = app;
