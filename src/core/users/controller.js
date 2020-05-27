@@ -14,10 +14,10 @@ async function createUser(req, res) {
 
         await scope.createUser(body);
 
-        await repository.createUser(body);
+        const data = await service.createUser(body);
 
         res.status(201).json({
-            content: {},
+            content: data,
             message: 'User successfully registered',
         });
     } catch (e) {
@@ -31,9 +31,7 @@ async function authentication(req, res) {
 
         await scope.authentication(body);
 
-        const user = await repository.authentication(body);
-
-        const data = service.generateToken(user);
+        const data = await service.authentication(body);
 
         res.status(200).json({
             content: data,
