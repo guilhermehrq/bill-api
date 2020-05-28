@@ -1,6 +1,5 @@
 const { handleError } = require('../../utils/common');
 const scope = require('./scope');
-const repository = require('./repository');
 const service = require('./service');
 
 module.exports = {

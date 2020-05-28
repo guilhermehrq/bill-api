@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const repository = require('./repository')
+const { generateToken } = require('../../utils/auth');
+const repository = require('./repository');
 
 module.exports = {
     createUser,
@@ -49,11 +49,3 @@ async function authentication(data) {
 
     return user;
 }
-
-function generateToken(user) {
-    return jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
-        expiresIn: 84600,
-    });
-}
-
-
