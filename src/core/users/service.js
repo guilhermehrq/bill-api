@@ -1,10 +1,10 @@
-const { generateToken } = require('../../utils/auth');
-const repository = require('./repository');
+const { generateToken } = require("../../utils/auth");
+const repository = require("./repository");
 
 module.exports = {
     createUser,
-    authentication
-}
+    authentication,
+};
 
 async function createUser(data) {
     const { email, password, name } = data;
@@ -31,15 +31,15 @@ async function authentication(data) {
     if (!isCorrect) {
         throw {
             statusCode: 401,
-            message: 'Invalid password'
-        }
+            message: "Invalid password",
+        };
     }
 
     if (user.block_date != null) {
         throw {
             statusCode: 401,
-            message: 'Blocked user'
-        }
+            message: "Blocked user",
+        };
     }
 
     delete user.password;

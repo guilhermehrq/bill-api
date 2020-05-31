@@ -1,11 +1,11 @@
-const validate = require('../../utils/validate')
+const validate = require("../../utils/validate");
 
 module.exports = {
     createUser,
-    authentication
-}
+    authentication,
+};
 
-async function createUser(data) {
+async function createUser(params) {
     const validation = {
         email: {
             string: true,
@@ -27,18 +27,18 @@ async function createUser(data) {
             notNull: true,
             notEmpty: true,
             maxLength: 100,
-        }
+        },
     };
 
     try {
-        await validate(data, validation)
+        await validate(params, validation);
     } catch (e) {
         e.statusCode = 400;
         throw e;
     }
 }
 
-async function authentication(data) {
+async function authentication(params) {
     const validation = {
         email: {
             string: true,
@@ -51,11 +51,11 @@ async function authentication(data) {
             required: true,
             notNull: true,
             notEmpty: true,
-        }
+        },
     };
 
     try {
-        await validate(data, validation)
+        await validate(params, validation);
     } catch (e) {
         e.statusCode = 400;
         throw e;

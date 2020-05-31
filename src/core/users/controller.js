@@ -1,15 +1,15 @@
-const { handleError } = require('../../utils/common');
-const scope = require('./scope');
-const service = require('./service');
+const { handleError } = require("../../utils/common");
+const scope = require("./scope");
+const service = require("./service");
 
 module.exports = {
     createUser,
-    authentication
-}
+    authentication,
+};
 
 async function createUser(req, res) {
     try {
-        const body = { email, password, name } = req.body;
+        const body = ({ email, password, name } = req.body);
 
         await scope.createUser(body);
 
@@ -17,7 +17,7 @@ async function createUser(req, res) {
 
         res.status(201).json({
             content: data,
-            message: 'User successfully registered',
+            message: "User successfully registered",
         });
     } catch (e) {
         return handleError(res, e);
@@ -26,7 +26,7 @@ async function createUser(req, res) {
 
 async function authentication(req, res) {
     try {
-        const body = { email, password } = req.body;
+        const body = ({ email, password } = req.body);
 
         await scope.authentication(body);
 
@@ -34,7 +34,7 @@ async function authentication(req, res) {
 
         res.status(200).json({
             content: data,
-            message: 'User successfully authenticated',
+            message: "User successfully authenticated",
         });
     } catch (e) {
         return handleError(res, e);

@@ -13,6 +13,7 @@
     },
     "rules": {
         "single": true,
-        "indent": ["error", 4]
+        "indent": ["error", 4],
+        "array-bracket-spacing": "warn"
     }
 }

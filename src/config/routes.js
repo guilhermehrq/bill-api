@@ -1,6 +1,7 @@
 const { authMiddleware } = require('../utils/auth');
 
 const users = require('../core/users/controller');
+const accounts = require('../core/accounts/controller');
 
 module.exports = (app) => {
     app.route('/ping').get((req, res) =>{
@@ -10,9 +11,12 @@ module.exports = (app) => {
         })
     });
 
-    // User
+    // Users
     app.route('/users').post(users.createUser);
     app.route('/auth').post(users.authentication);
 
     app.use(authMiddleware);
+
+    // Accounts
+    app.route('/accounts').post(accounts.createAccount);
 };

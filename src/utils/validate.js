@@ -23,7 +23,7 @@ function doValidate(params, validation) {
             if (suitcase === null) return errorList.push(`"${paramName}" não pode ser nulo`);
         }
 
-        if (metalDetector.notEmpty) {
+        if ((metalDetector.string || metalDetector.array) && metalDetector.notEmpty) {
             if (!suitcase.length) return errorList.push(`"${paramName}" não pode ser vazio`);
         }
 
