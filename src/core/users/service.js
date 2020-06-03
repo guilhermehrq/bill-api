@@ -14,7 +14,7 @@ async function createUser(data) {
     const user = repository.getUserByEmail(email);
 
     delete user.password;
-    delete user.block_date;
+    delete user.blockDate;
 
     user.token = generateToken(user);
 
@@ -35,7 +35,7 @@ async function authentication(data) {
         };
     }
 
-    if (user.block_date != null) {
+    if (user.blockDate != null) {
         throw {
             statusCode: 401,
             message: "Blocked user",
@@ -43,7 +43,7 @@ async function authentication(data) {
     }
 
     delete user.password;
-    delete user.block_date;
+    delete user.blockDate;
 
     user.token = generateToken(user);
 

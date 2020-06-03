@@ -18,5 +18,10 @@ module.exports = (app) => {
     app.use(authMiddleware);
 
     // Accounts
-    app.route('/accounts').post(accounts.createAccount);
+    app.route('/accounts')
+        .get(accounts.getAccounts)
+        .post(accounts.createAccount);
+    app.route('/accounts/:id')
+        .get(accounts.getAccountByID)
+        .put(accounts.updateAccount);
 };

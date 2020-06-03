@@ -45,6 +45,6 @@ function authMiddleware(req, res, next) {
 
 function generateToken(user) {
     return jwt.sign({ id: user.id, email: user.email, name: user.name }, process.env.JWT_SECRET, {
-        expiresIn: 84600,
+        expiresIn: 592200,
     });
 }
