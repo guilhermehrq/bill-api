@@ -16,6 +16,7 @@ async function createCategory(req, res) {
             type: req.body.type,
             color: req.body.color,
             icon: req.body.icon,
+            active: true,
         };
 
         await scope.createCategory(params);

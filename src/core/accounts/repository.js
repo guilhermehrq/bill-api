@@ -104,7 +104,8 @@ async function getAccounts(params) {
                 type_id        as "typeID",
                 color
            FROM accounts
-          WHERE user_id = $1 ${filters.join(" ")}`,
+          WHERE user_id = $1 ${filters.join(" ")}
+          ORDER BY title`,
         [userID]
     );
 

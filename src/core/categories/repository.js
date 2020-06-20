@@ -23,12 +23,11 @@ async function getCategories(params) {
     const filters = [];
 
     if (title != null) {
-        filters.push(`AND title = ${title}`);
+        filters.push(`AND title = '${title}'`);
     }
 
     const res = await pool.query(
         `SELECT id,
-                user_id, as "userID"
                 title,
                 type,
                 color,
@@ -37,7 +36,8 @@ async function getCategories(params) {
           WHERE user_id = $1
             AND type    = $2
             AND active  = $3
-            ${filters.join(" ")}`,
+            ${filters.join()}
+          ORDER BY title`,
         [userID, type, active]
     );
 
@@ -47,7 +47,6 @@ async function getCategories(params) {
 async function getCategoryByID(categoryID) {
     const res = await pool.query(
         `SELECT id,
-                user_id, as "userID"
                 title,
                 type,
                 color,
@@ -65,9 +64,9 @@ async function updateCategory(params) {
 
     return await pool.query(
         `UPDATE categories
-            SET title  = $1
-                color  = $2
-                icon   = $3
+            SET title  = $1,
+                color  = $2,
+                icon   = $3,
                 active = $4
           WHERE id = $5`,
         [title, color, icon, active, id]
