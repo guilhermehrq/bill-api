@@ -6,6 +6,7 @@ module.exports = {
     updateAccount,
     getAccounts,
     getAccountByID,
+    updateAccountBalance,
 };
 
 async function createAccount(params) {
@@ -131,4 +132,13 @@ async function getAccountByID(accountID, userID) {
     );
 
     return res.rows;
+}
+
+async function updateAccountBalance(accountID, value) {
+    return await pool.query(
+        `UPDATE accounts
+            SET actual_balance = actual_balance + ($1)
+          WHERE id = $2`,
+        [ value, accountID ]
+    );
 }

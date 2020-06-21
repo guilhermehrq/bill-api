@@ -2,7 +2,8 @@ const { authMiddleware } = require('../utils/auth');
 
 const users = require('../core/users/controller');
 const accounts = require('../core/accounts/controller');
-const categories = require('../core/categories/controller')
+const categories = require('../core/categories/controller');
+const transactions = require('../core/transactions/controller');
 
 module.exports = (app) => {
     app.route('/ping').get((req, res) =>{
@@ -32,4 +33,7 @@ module.exports = (app) => {
         .get(categories.getCategories)
     app.route('/categories/:id')
         .put(categories.updateCategory)
+
+    app.route('/transactions')
+        .post(transactions.insertTransaction)
 };
