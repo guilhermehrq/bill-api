@@ -91,11 +91,11 @@ async function getAccounts(params) {
     const { userID, includeDashboard, active } = params;
 
     if (includeDashboard != null) {
-        filters.push(`AND include_dashboard = ${includeDashboard}`);
+        filters.push(`AND a.include_dashboard = ${includeDashboard}`);
     }
 
     if (active != null) {
-        filters.push(`AND active = ${active}`);
+        filters.push(`AND a.active = ${active}`);
     }
 
     const res = await pool.query(
