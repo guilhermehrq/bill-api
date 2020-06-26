@@ -99,14 +99,17 @@ async function getAccounts(params) {
     }
 
     const res = await pool.query(
-        `SELECT id,
-                title,
-                actual_balance as "actualBalance",
-                type_id        as "typeID",
-                color
-           FROM accounts
-          WHERE user_id = $1 ${filters.join(" ")}
-          ORDER BY title`,
+        `SELECT a.id,
+                a.title,
+                a.actual_balance AS "actualBalance",
+                a.type_id        AS "typeID",
+                act.title        AS "typeTitle",
+                a.color,
+                act.icon
+           FROM accounts a
+          INNER JOIN account_types act ON (act.id = a.type_id)
+          WHERE a.user_id = $1 ${filters.join(" ")}
+          ORDER BY a.title`,
         [userID]
     );
 
