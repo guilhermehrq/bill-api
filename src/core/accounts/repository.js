@@ -149,7 +149,7 @@ async function getAccountTypes() {
                 color
            FROM account_types
           WHERE active IS TRUE
-          ORDER BY title;`);
+          ORDER BY title`);
 
     return res.rows;
 }

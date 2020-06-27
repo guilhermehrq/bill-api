@@ -36,19 +36,19 @@ async function insertStandardCategories(userEmail) {
 
     await pool.query(
         `INSERT INTO categories (user_id, title, type, color, icon)
-              VALUES ($1, 'Salário', 'I', '#1E88E5', 'local_atm'),
-                     ($1, 'Investimentos', 'I', '#43A047', 'trending_up'),
-                     ($1, 'Presente', 'I', '#6D4C41', 'card_giftcard'),
-                     ($1, 'Prêmios', 'I', '#3949AB', 'emoji_events'),
-                     ($1, 'Outros', 'I', '#546E7A', 'more_horiz'),
-                     ($1, 'Educação', 'E', '#546E7A', 'menu_book'),
-                     ($1, 'Contas', 'E', '#E53935', 'attach_money'),
-                     ($1, 'Comida e bebida', 'E', '#1E88E5', 'restaurant'),
-                     ($1, 'Casa', 'E', '#5E35B1', 'home'),
-                     ($1, 'Transporte', 'E', '#00897B', 'directions_car'),
-                     ($1, 'Compras', 'E', '#D81B60', 'local_mall'),
-                     ($1, 'Transferência Entrada', 'T', '#43A047', 'swap_vert'),
-                     ($1, 'Transferência Saída', 'T', '#E53935', 'swap_vert');`,
+              VALUES ($1, 'Salário', 'I', '0xFF1E88E5', '58686'),
+                     ($1, 'Investimentos', 'I', '0xFF43A047', '59621'),
+                     ($1, 'Presente', 'I', '0xFF6D4C41', '59638'),
+                     ($1, 'Prêmios', 'I', '0xFF3949AB', '59448'),
+                     ($1, 'Outros', 'I', '0xFF546E7A', '58835'),
+                     ($1, 'Educação', 'E', '0xFF546E7A', '59404'),
+                     ($1, 'Contas', 'E', '0xFFE53935', '57895'),
+                     ($1, 'Comida e bebida', 'E', '0xFF1E88E5', '58732'),
+                     ($1, 'Casa', 'E', '0xFF5E35B1', '59530'),
+                     ($1, 'Transporte', 'E', '0xFF00897B', '58673'),
+                     ($1, 'Compras', 'E', '0xFFD81B60', '58700'),
+                     ($1, 'Transferência Entrada', 'T', '0xFF43A047', '59605'),
+                     ($1, 'Transferência Saída', 'T', '0xFFE53935', '59605');`,
         [id]
     );
 }
