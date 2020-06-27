@@ -27,6 +27,9 @@ module.exports = (app) => {
         .get(accounts.getAccountByID)
         .put(accounts.updateAccount);
 
+    app.route('/account-types')
+        .get(accounts.getAccountTypes);
+
     // Categories
     app.route('/categories')
         .post(categories.createCategory)

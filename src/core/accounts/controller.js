@@ -7,6 +7,7 @@ module.exports = {
     updateAccount,
     getAccounts,
     getAccountByID,
+    getAccountTypes,
 };
 
 async function createAccount(req, res) {
@@ -92,6 +93,19 @@ async function getAccountByID(req, res) {
         await scope.getAccountByID(params);
 
         const data = await service.getAccountByID(params);
+
+        res.status(200).json({
+            content: data,
+            message: "Request completed",
+        });
+    } catch (e) {
+        return handleError(res, e);
+    }
+}
+
+async function getAccountTypes(req, res) {
+    try {
+        const data = await service.getAccountTypes();
 
         res.status(200).json({
             content: data,

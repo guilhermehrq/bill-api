@@ -5,6 +5,7 @@ module.exports = {
     updateAccount,
     getAccounts,
     getAccountByID,
+    getAccountTypes,
 }
 
 async function createAccount(params) {
@@ -67,4 +68,8 @@ async function getAccountByID(params) {
     account.initialBalance = +account.initialBalance;
 
     return account;
+}
+
+async function getAccountTypes() {
+    return await repository.getAccountTypes()
 }

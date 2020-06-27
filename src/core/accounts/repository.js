@@ -7,6 +7,7 @@ module.exports = {
     getAccounts,
     getAccountByID,
     updateAccountBalance,
+    getAccountTypes,
 };
 
 async function createAccount(params) {
@@ -138,4 +139,17 @@ async function updateAccountBalance(accountID, value) {
           WHERE id = $2`,
         [ value, accountID ]
     );
+}
+
+async function getAccountTypes() {
+    const res = await pool.query(
+        `SELECT id,
+                title,
+                icon,
+                color
+           FROM account_types
+          WHERE active IS TRUE
+          ORDER BY title;`);
+
+    return res.rows;
 }
