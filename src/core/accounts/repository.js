@@ -15,22 +15,20 @@ async function createAccount(params) {
         title,
         initialBalance,
         typeID,
-        color,
         includeDashboard,
         mainAccount,
     } = params;
 
     return await pool.query(
         `INSERT INTO accounts(user_id, title, initial_balance, actual_balance, type_id,
-                              color, include_dashboard, main_account, created_at)
+                              include_dashboard, main_account, created_at)
               VALUES($1, $2, $3, $3, $4,
-                     $5, $6, $7, now())`,
+                     $5, $6, now())`,
         [
             userID,
             title,
             initialBalance,
             typeID,
-            color,
             includeDashboard,
             mainAccount,
         ]
@@ -54,7 +52,6 @@ async function updateAccount(params) {
         title,
         actualBalance,
         typeID,
-        color,
         includeDashboard,
         mainAccount,
         active,
@@ -65,18 +62,16 @@ async function updateAccount(params) {
             SET title             = $1,
                 actual_balance    = $2,
                 type_id           = $3,
-                color             = $4,
-                include_dashboard = $5,
-                main_account      = $6,
-                active            = $7,
+                include_dashboard = $4,
+                main_account      = $5,
+                active            = $6,
                 updated_at        = now()
-          WHERE id      = $8
-            AND user_id = $9`,
+          WHERE id      = $7
+            AND user_id = $8`,
         [
             title,
             actualBalance,
             typeID,
-            color,
             includeDashboard,
             mainAccount,
             active,
@@ -104,7 +99,7 @@ async function getAccounts(params) {
                 a.actual_balance AS "actualBalance",
                 a.type_id        AS "typeID",
                 act.title        AS "typeTitle",
-                a.color,
+                act.color,
                 act.icon
            FROM accounts a
           INNER JOIN account_types act ON (act.id = a.type_id)
@@ -124,7 +119,6 @@ async function getAccountByID(accountID, userID) {
                 initial_balance   as "initialBalance",
                 actual_balance    as "actualBalance",
                 type_id           as "typeID",
-                color,
                 include_dashboard as "includeDashboard",
                 main_account      as "mainAccount",
                 active
