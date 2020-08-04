@@ -36,7 +36,7 @@ async function getCategories(params) {
           WHERE user_id = $1
             AND type    = $2
             AND active  = $3
-            ${filters.join()}
+            ${filters.join(" ")}
           ORDER BY title`,
         [userID, type, active]
     );

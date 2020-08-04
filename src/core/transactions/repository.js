@@ -1,7 +1,8 @@
 const { pool } = require('../../config/database');
 
 module.exports = {
-    insertTransaction
+    insertTransaction,
+    getTransactions,
 };
 
 async function insertTransaction(params) {
@@ -14,12 +15,47 @@ async function insertTransaction(params) {
     );
 }
 
-// async function getTransactions(params) {
-//     const {
-//         userID,
-//         accountsID,
-//         categoriesID,
-//         monthRef,
-//         categoryType,
-//     }
-// }
+async function getTransactions(params) {
+    const {
+        userID,
+        accountsID,
+        categoriesID,
+        date,
+    } = params;
+
+    const filters = [];
+
+    if (accountsID.length){
+        filters.push(`AND t.account_id IN (${accountsID.join(',')})`)
+    }
+
+    if (categoriesID.length) {
+        filters.push(`AND t.category_id IN (${categoriesID.join(',')})`)
+    }
+
+    const res = await pool.query(
+        `SELECT trim(to_char(t.date, 'Day')) || ', ' || to_char(t.date, 'DD') AS "transactionDate",
+                (SELECT json_agg(exp) AS "transactions"
+                   FROM (SELECT t2.id,
+                        t2.value,
+                        t2.description,
+                        c.title        AS "categoryTitle",
+                        c.icon         AS "categoryIcon",
+                        c.color        AS "categoryColor",
+                        a.title        AS "accountTitle"
+                   FROM transactions t2
+                  INNER JOIN categories c ON (c.id = t2.category_id)
+                  INNER JOIN accounts   a ON (a.id = t2.account_id)
+                  WHERE t2.date = t.date) AS exp)
+           FROM transactions t
+          INNER JOIN accounts ac ON (ac.id = t.account_id)
+          WHERE ac.user_id                 = $1
+            AND to_char(t.date, 'MM/YYYY') = $2
+            AND t.active IS TRUE
+            ${filters.join(" ")}
+          GROUP BY date ORDER BY "transactionDate" ASC;`,
+          [userID, date]
+    )
+
+    return res.rows;
+}

@@ -1,7 +1,8 @@
 const validate = require("../../utils/validate");
 
 module.exports = {
-    insertTransaction
+    insertTransaction,
+    getTransactions,
 };
 
 async function insertTransaction(params) {
@@ -37,6 +38,35 @@ async function insertTransaction(params) {
             required: true,
             notNull: true,
             date: true,
+        },
+    };
+
+    try {
+        await validate(params, validation);
+    } catch (e) {
+        e.statusCode = 400;
+        throw e;
+    }
+}
+
+async function getTransactions(params) {
+    const validation = {
+        userID: {
+            required: true,
+            notNull: true,
+            number: true,
+        },
+        accountsID: {
+            array: true,
+        },
+        categoriesID: {
+            array: true,
+        },
+        date: {
+            string: true,
+            required: true,
+            notNull: true,
+            notEmpty: true,
         },
     };
 

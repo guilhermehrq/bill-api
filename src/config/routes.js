@@ -39,4 +39,7 @@ module.exports = (app) => {
 
     app.route('/transactions')
         .post(transactions.insertTransaction)
+
+    app.route('/transactions-search')
+        .post(transactions.getTransactions)
 };

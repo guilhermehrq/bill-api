@@ -3,7 +3,8 @@ const accountsRepository = require('../accounts/repository');
 const categoriesRepository = require('../categories/repository');
 
 module.exports = {
-    insertTransaction
+    insertTransaction,
+    getTransactions,
 }
 
 async function insertTransaction(params) {
@@ -36,4 +37,11 @@ async function insertTransaction(params) {
     await repository.insertTransaction(params);
 
     await accountsRepository.updateAccountBalance(params.accountID, params.value);
+}
+
+
+async function getTransactions(params) {
+    const res = await repository.getTransactions(params)
+
+    return res.length > 0 ? res : [];
 }

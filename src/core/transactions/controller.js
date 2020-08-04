@@ -4,6 +4,7 @@ const service = require("./service");
 
 module.exports = {
     insertTransaction,
+    getTransactions,
 };
 
 async function insertTransaction(req, res) {
@@ -24,6 +25,28 @@ async function insertTransaction(req, res) {
         res.status(201).json({
             content: {},
             message: "Transaction successfully inserted",
+        });
+    } catch (e) {
+        return handleError(res, e);
+    }
+}
+
+async function getTransactions(req, res) {
+    try {
+        const params = {
+            userID: req.user.id,
+            accountsID: req.body.accountsID || [],
+            categoriesID: req.body.categoriesID || [],
+            date: req.body.date,
+        };
+
+        await scope.getTransactions(params);
+
+        const data = await service.getTransactions(params);
+
+        res.status(200).json({
+            content: data,
+            message: "Request completed",
         });
     } catch (e) {
         return handleError(res, e);
