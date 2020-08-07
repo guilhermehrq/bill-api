@@ -3,6 +3,7 @@ const { pool } = require('../../config/database');
 module.exports = {
     insertTransaction,
     getTransactions,
+    getTransactionsValue,
 };
 
 async function insertTransaction(params) {
@@ -58,4 +59,19 @@ async function getTransactions(params) {
     )
 
     return res.rows;
+}
+
+async function getTransactionsValue(userID, transactionType, date) {
+    const transactionValue = transactionType === 'I' ? 'AND t.value > 0' : 'AND t.value < 0';
+
+    return await pool.query(
+        `SELECT SUM(t.value) AS value
+           FROM transactions t
+          INNER JOIN accounts a ON (a.id = t.account_id)
+          WHERE a.user_id                    = $1
+            AND to_char(t."date", 'MM/YYYY') = $2
+            AND t.active IS TRUE
+            ${transactionValue};`,
+          [userID, date]
+    );
 }

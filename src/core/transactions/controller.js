@@ -5,6 +5,7 @@ const service = require("./service");
 module.exports = {
     insertTransaction,
     getTransactions,
+    getTransactionsValue,
 };
 
 async function insertTransaction(req, res) {
@@ -43,6 +44,26 @@ async function getTransactions(req, res) {
         await scope.getTransactions(params);
 
         const data = await service.getTransactions(params);
+
+        res.status(200).json({
+            content: data,
+            message: "Request completed",
+        });
+    } catch (e) {
+        return handleError(res, e);
+    }
+}
+
+async function getTransactionsValue(req, res) {
+    try {
+        const params = {
+            userID: req.user.id,
+            date: req.query.date
+        };
+
+        await scope.getTransactionsValue(params);
+
+        const data = await service.getTransactionsValue(params.userID, params.date);
 
         res.status(200).json({
             content: data,

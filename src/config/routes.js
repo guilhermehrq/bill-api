@@ -42,4 +42,7 @@ module.exports = (app) => {
 
     app.route('/transactions-search')
         .post(transactions.getTransactions)
+
+    app.route('/monthly-balance')
+        .get(transactions.getTransactionsValue)
 };
