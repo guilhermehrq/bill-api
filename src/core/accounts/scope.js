@@ -31,9 +31,6 @@ async function createAccount(params) {
             notNull: true,
             number: true,
         },
-        color: {
-            string: true,
-        },
         includeDashboard: {
             required: true,
             notNull: true,

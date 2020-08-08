@@ -35,6 +35,7 @@ module.exports = (app) => {
         .post(categories.createCategory)
         .get(categories.getCategories)
     app.route('/categories/:id')
+        .get(categories.getCategoryByID)
         .put(categories.updateCategory)
 
     app.route('/transactions')

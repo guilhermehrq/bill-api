@@ -4,6 +4,7 @@ module.exports = {
     createCategory,
     getCategories,
     updateCategory,
+    getCategoryByID,
 }
 
 async function createCategory(params) {
@@ -82,8 +83,35 @@ async function getCategories(params) {
     }
 }
 
+async function getCategoryByID(params) {
+    const validation = {
+        userID: {
+            required: true,
+            notNull: true,
+            number: true,
+        },
+        id: {
+            required: true,
+            notNull: true,
+            number: true,
+        }
+    };
+
+    try {
+        await validate(params, validation);
+    } catch (e) {
+        e.statusCode = 400;
+        throw e;
+    }
+}
+
 async function updateCategory(params) {
     const validation = {
+        userID: {
+            required: true,
+            notNull: true,
+            number: true,
+        },
         id: {
             required: true,
             notNull: true,

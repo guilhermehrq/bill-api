@@ -6,6 +6,7 @@ module.exports = {
     createCategory,
     getCategories,
     updateCategory,
+    getCategoryByID,
 };
 
 async function createCategory(req, res) {
@@ -54,9 +55,30 @@ async function getCategories(req, res) {
     }
 }
 
+async function getCategoryByID(req, res) {
+    try {
+        const params = {
+            userID: req.user.id,
+            id: req.params.id,
+        };
+
+        await scope.getCategoryByID(params);
+
+        const data = await service.getCategoryByID(params);
+
+        res.status(200).json({
+            content: data,
+            message: "Request completed",
+        });
+    } catch (e) {
+        return handleError(res, e);
+    }
+}
+
 async function updateCategory(req, res) {
     try {
         const params = {
+            userID: req.user.id,
             id: req.params.id,
             title: req.body.title,
             color: req.body.color,

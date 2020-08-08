@@ -17,7 +17,6 @@ async function createAccount(req, res) {
             title: req.body.title,
             initialBalance: req.body.initialBalance || 0,
             typeID: req.body.typeID,
-            color: req.body.color || "",
             includeDashboard: req.body.includeDashboard,
             mainAccount: req.body.mainAccount,
         };

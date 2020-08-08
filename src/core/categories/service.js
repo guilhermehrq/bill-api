@@ -4,6 +4,7 @@ module.exports = {
     createCategory,
     getCategories,
     updateCategory,
+    getCategoryByID,
 }
 
 async function createCategory(params) {
@@ -25,8 +26,21 @@ async function getCategories(params) {
     return res.length > 0 ? res : [];
 }
 
+async function getCategoryByID(params) {
+    const res = await repository.getCategoryByID(params.id, params.userID);
+
+    if (!res.length) {
+        throw {
+            statusCode: 404,
+            message: "Category not found",
+        };
+    }
+
+    return res[0];
+}
+
 async function updateCategory(params) {
-    const res = await repository.getCategoryByID(params.id);
+    const res = await repository.getCategoryByID(params.id, params.userID);
 
     if (!res.length) {
         throw {

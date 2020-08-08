@@ -44,16 +44,18 @@ async function getCategories(params) {
     return res.rows;
 }
 
-async function getCategoryByID(categoryID) {
+async function getCategoryByID(categoryID, userID) {
     const res = await pool.query(
         `SELECT id,
                 title,
                 type,
                 color,
-                icon
+                icon,
+                active
            FROM categories
-          WHERE id = $1`,
-        [categoryID]
+          WHERE id      = $1
+            AND user_id = $2`,
+        [categoryID, userID]
     );
 
     return res.rows;
