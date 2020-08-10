@@ -22,7 +22,8 @@ async function insertTransaction(params) {
     }
 
     let category = await categoriesRepository.getCategoryByID(
-        params.categoryID
+        params.categoryID,
+        params.userID
     );
 
     if (!category.length) {
