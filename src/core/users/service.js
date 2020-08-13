@@ -11,7 +11,7 @@ async function createUser(data) {
 
     await repository.createUser(email, password, name);
 
-    const user = repository.getUserByEmail(email);
+    const user = await repository.getUserByEmail(email);
 
     delete user.password;
     delete user.blockDate;
