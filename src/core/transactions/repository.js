@@ -47,14 +47,15 @@ async function getTransactions(params) {
                    FROM transactions t2
                   INNER JOIN categories c ON (c.id = t2.category_id)
                   INNER JOIN accounts   a ON (a.id = t2.account_id)
-                  WHERE t2.date = t.date) AS exp)
+                  WHERE t2.date   = t.date
+                    AND a.user_id = $1) AS exp)
            FROM transactions t
           INNER JOIN accounts ac ON (ac.id = t.account_id)
           WHERE ac.user_id                 = $1
             AND to_char(t.date, 'MM/YYYY') = $2
             AND t.active IS TRUE
             ${filters.join(" ")}
-          GROUP BY date ORDER BY "transactionDate" ASC;`,
+          GROUP BY date ORDER BY "transactionDate" DESC;`,
           [userID, date]
     )
 
