@@ -4,6 +4,7 @@ const users = require('../core/users/controller');
 const accounts = require('../core/accounts/controller');
 const categories = require('../core/categories/controller');
 const transactions = require('../core/transactions/controller');
+const articles = require('../core/articles/controller')
 
 module.exports = (app) => {
     app.route('/ping').get((req, res) =>{
@@ -46,4 +47,7 @@ module.exports = (app) => {
 
     app.route('/monthly-balance')
         .get(transactions.getTransactionsValue)
+
+    app.route('/articles')
+        .get(articles.getArticles)
 };
