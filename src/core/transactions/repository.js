@@ -55,7 +55,7 @@ async function getTransactions(params) {
             AND to_char(t.date, 'MM/YYYY') = $2
             AND t.active IS TRUE
             ${filters.join(" ")}
-          GROUP BY date ORDER BY "transactionDate" DESC;`,
+          GROUP BY date ORDER BY t.date DESC;`,
           [userID, date]
     )
 
