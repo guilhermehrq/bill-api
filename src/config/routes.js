@@ -1,53 +1,59 @@
-const { authMiddleware } = require('../utils/auth');
+const { authMiddleware } = require("../utils/auth");
 
-const users = require('../core/users/controller');
-const accounts = require('../core/accounts/controller');
-const categories = require('../core/categories/controller');
-const transactions = require('../core/transactions/controller');
-const articles = require('../core/articles/controller')
+const users = require("../core/users/controller");
+const accounts = require("../core/accounts/controller");
+const categories = require("../core/categories/controller");
+const transactions = require("../core/transactions/controller");
+const articles = require("../core/articles/controller");
 
 module.exports = (app) => {
-    app.route('/ping').get((req, res) =>{
+    app.route("/ping").get((req, res) => {
         res.status(200).json({
             data: Date().toString(),
-            message: 'up'
-        })
+            message: "up",
+        });
     });
 
     // Users
-    app.route('/users').post(users.createUser);
-    app.route('/auth').post(users.authentication);
+    app.route("/users")
+        .post(users.createUser);
+    app.route("/auth")
+        .post(users.authentication);
 
     app.use(authMiddleware);
 
     // Accounts
-    app.route('/accounts')
+    app.route("/accounts")
         .get(accounts.getAccounts)
         .post(accounts.createAccount);
-    app.route('/accounts/:id')
+
+    app.route("/accounts/:id")
         .get(accounts.getAccountByID)
         .put(accounts.updateAccount);
 
-    app.route('/account-types')
+    app.route("/account-types")
         .get(accounts.getAccountTypes);
 
     // Categories
-    app.route('/categories')
+    app.route("/categories")
         .post(categories.createCategory)
-        .get(categories.getCategories)
-    app.route('/categories/:id')
+        .get(categories.getCategories);
+    app.route("/categories/:id")
         .get(categories.getCategoryByID)
-        .put(categories.updateCategory)
+        .put(categories.updateCategory);
 
-    app.route('/transactions')
-        .post(transactions.insertTransaction)
+    app.route("/transactions")
+        .post(transactions.insertTransaction);
 
-    app.route('/transactions-search')
-        .post(transactions.getTransactions)
+    app.route("/transactions/transference")
+        .post(transactions.insertTransference);
 
-    app.route('/monthly-balance')
-        .get(transactions.getTransactionsValue)
+    app.route("/transactions-search")
+        .post(transactions.getTransactions);
 
-    app.route('/articles')
-        .get(articles.getArticles)
+    app.route("/monthly-balance")
+        .get(transactions.getTransactionsValue);
+
+    app.route("/articles")
+        .get(articles.getArticles);
 };

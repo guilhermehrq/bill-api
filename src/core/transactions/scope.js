@@ -4,6 +4,7 @@ module.exports = {
     insertTransaction,
     getTransactions,
     getTransactionsValue,
+    insertTransference,
 };
 
 async function insertTransaction(params) {
@@ -34,6 +35,43 @@ async function insertTransaction(params) {
             string: true,
             notEmpty: true,
             maxlength: 255,
+        },
+        date: {
+            required: true,
+            notNull: true,
+            date: true,
+        },
+    };
+
+    try {
+        await validate(params, validation);
+    } catch (e) {
+        e.statusCode = 400;
+        throw e;
+    }
+}
+
+async function insertTransference(params) {
+    const validation = {
+        userID: {
+            required: true,
+            notNull: true,
+            number: true,
+        },
+        accountFrom: {
+            required: true,
+            notNull: true,
+            number: true,
+        },
+        accountTo: {
+            required: true,
+            notNull: true,
+            number: true,
+        },
+        value: {
+            required: true,
+            notNull: true,
+            number: true,
         },
         date: {
             required: true,

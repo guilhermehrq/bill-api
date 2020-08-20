@@ -6,6 +6,7 @@ module.exports = {
     insertTransaction,
     getTransactions,
     getTransactionsValue,
+    insertTransference,
 };
 
 async function insertTransaction(req, res) {
@@ -22,6 +23,29 @@ async function insertTransaction(req, res) {
         await scope.insertTransaction(params);
 
         await service.insertTransaction(params);
+
+        res.status(201).json({
+            content: {},
+            message: "Transaction successfully inserted",
+        });
+    } catch (e) {
+        return handleError(res, e);
+    }
+}
+
+async function insertTransference(req, res) {
+    try {
+        const params = {
+            userID: req.user.id,
+            accountFrom: req.body.accountFrom,
+            accountTo: req.body.accountTo,
+            value: req.body.value || 0,
+            date: req.body.date,
+        };
+
+        await scope.insertTransference(params);
+
+        await service.insertTransference(params);
 
         res.status(201).json({
             content: {},

@@ -6,6 +6,7 @@ module.exports = {
     insertTransaction,
     getTransactions,
     getTransactionsValue,
+    insertTransference,
 };
 
 async function insertTransaction(params) {
@@ -47,6 +48,55 @@ async function insertTransaction(params) {
         params.accountID,
         params.value
     );
+}
+
+async function insertTransference(params) {
+    const accountFrom = await accountsRepository.getAccountByID(
+        params.accountFrom,
+        params.userID
+    );
+
+    const accountTo = await accountsRepository.getAccountByID(
+        params.accountTo,
+        params.userID
+    );
+
+    if (!accountFrom.length || !accountTo.length) {
+        throw {
+            statusCode: 404,
+            message: "Account not found",
+        };
+    }
+
+    const transferenceCategories = await categoriesRepository.getCategories({ userID: params.userID, type: 'T', active: true });
+
+    const transactionFrom = {
+        accountID: params.accountFrom,
+        categoryID: transferenceCategories.filter(item => item.title === 'Transferência Saída')[0].id,
+        value: params.value * -1,
+        description: `${accountFrom[0].title} => ${accountTo[0].title}`,
+        date: params.date
+    }
+
+    const transactionTo = {
+        accountID: params.accountTo,
+        categoryID: transferenceCategories.filter(item => item.title === 'Transferência Entrada')[0].id,
+        value: params.value,
+        description: `${accountTo[0].title} <= ${accountFrom[0].title}`,
+        date: params.date
+    }
+
+    // Transferência de saída
+    await repository.insertTransaction(transactionFrom)
+
+    // Transferência de entrada
+    await repository.insertTransaction(transactionTo)
+
+    // Transferência de saída
+    await accountsRepository.updateAccountBalance(params.accountFrom, (params.value * -1))
+
+    // Transferência de entrada
+    await accountsRepository.updateAccountBalance(params.accountTo, (params.value))
 }
 
 async function getTransactions(params) {
