@@ -65,16 +65,15 @@ async function getTransactions(params) {
 }
 
 async function getTransactionsValue(userID, transactionType, date) {
-    const transactionValue = transactionType === 'I' ? 'AND t.value > 0' : 'AND t.value < 0';
-
     return await pool.query(
         `SELECT SUM(t.value) AS value
            FROM transactions t
-          INNER JOIN accounts a ON (a.id = t.account_id)
+          INNER JOIN accounts   a ON (a.id = t.account_id)
+          INNER JOIN categories c ON (c.id = t.category_id)
           WHERE a.user_id                    = $1
             AND to_char(t."date", 'MM/YYYY') = $2
-            AND t.active IS TRUE
-            ${transactionValue};`,
-          [userID, date]
+            AND c.type                       = $3
+            AND t.active IS TRUE;`,
+          [userID, date, transactionType]
     );
 }
